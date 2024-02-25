@@ -9,14 +9,18 @@
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bold;
         text-align: center;
+        margin: 0;
+    }
+    #body {
         margin: auto;
         max-width: 500px;
-        
     }
     .game-board {
         display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         aspect-ratio: 1 / 1;
-        grid-template-columns: 24% 24% 24% 24%;
+        margin-left: 2%;
         grid-gap: 2px;
         position: absolute;
         width: 95%;
@@ -101,44 +105,63 @@
         z-index: 3;
     }
 
+    #header {
+        font-family: "Courier", monospace;
+        width: 100%;
+        vertical-align: middle;
+        text-align: center;
+        background-color: #2D3748;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin: 0;
+    }
+    #quag {
+        width: 80%;
+        object-fit: cover;
+    }
+
 </style>
 
 <body>
-    <h2>Unlimited Pokedoku</h2>
-    <div class="game-board">
-        <div class="box"></div>
-        <div id="topcat1" class="box">top-cat-1</div>
-        <div id="topcat2" class="box">top-cat-2</div>
-        <div id="topcat3" class="box">top-cat-3</div>
+    <h2 id="header">Unlimited Pokedoku</h2>
+    <div id="body">
+        <div class="game-board">
+            <div class="box">
+                <img id="quag" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/195.png">
+            </div>
+            <div id="topcat1" class="box">top-cat-1</div>
+            <div id="topcat2" class="box">top-cat-2</div>
+            <div id="topcat3" class="box">top-cat-3</div>
 
-        <div id="sidecat1" class="box">side-cat-1</div>
-        <div id="1-1" class="box entry" style="border-top-left-radius: 15%;" onclick="openSelector(1,1)"></div>
-        <div id="1-2" class="box entry" onclick="openSelector(1,2)"></div>
-        <div id="1-3" class="box entry" style="border-top-right-radius: 15%;" onclick="openSelector(1,3)"></div>
+            <div id="sidecat1" class="box">side-cat-1</div>
+            <div id="1-1" class="box entry" style="border-top-left-radius: 15%;" onclick="openSelector(1,1)"></div>
+            <div id="1-2" class="box entry" onclick="openSelector(1,2)"></div>
+            <div id="1-3" class="box entry" style="border-top-right-radius: 15%;" onclick="openSelector(1,3)"></div>
 
-        <div id="sidecat2" class="box">side-cat-2</div>
-        <div id="2-1" class="box entry" onclick="openSelector(2,1)"></div>
-        <div id="2-2" class="box entry" onclick="openSelector(2,2)"></div>
-        <div id="2-3" class="box entry" onclick="openSelector(2,3)"></div>
+            <div id="sidecat2" class="box">side-cat-2</div>
+            <div id="2-1" class="box entry" onclick="openSelector(2,1)"></div>
+            <div id="2-2" class="box entry" onclick="openSelector(2,2)"></div>
+            <div id="2-3" class="box entry" onclick="openSelector(2,3)"></div>
 
-        <div id="sidecat3" class="box">side-cat-3</div>
-        <div id="3-1" class="box entry" style="border-bottom-left-radius: 15%;" onclick="openSelector(3,1)"></div>
-        <div id="3-2" class="box entry" onclick="openSelector(3,2)"></div>
-        <div id="3-3" class="box entry" style="border-bottom-right-radius: 15%;" onclick="openSelector(3,3)"></div>
+            <div id="sidecat3" class="box">side-cat-3</div>
+            <div id="3-1" class="box entry" style="border-bottom-left-radius: 15%;" onclick="openSelector(3,1)"></div>
+            <div id="3-2" class="box entry" onclick="openSelector(3,2)"></div>
+            <div id="3-3" class="box entry" style="border-bottom-right-radius: 15%;" onclick="openSelector(3,3)"></div>
+        </div>
+        <div id="selector">
+            <p id="close" onclick="closeSelector()">&#x2715;</p><br>
+            <p style="margin-bottom: 5px;">Guess the Pokemon</p>
+            <p id="categories">ELECTRIC / LEGENDARY</p><br>
+            <div id="searchbox">
+                <p>&#x1F50E;&#xFE0E;&nbsp;&nbsp;&nbsp;Search...</p>
+            </div><br>
+            <ul id="searchresults">
+                <!-- to be populated with all pokemon that match -->
+            </ul>
+        </div>
+        <div id="background"></div>
+        <!-- <p id="errorMsg">error msg</p> -->
     </div>
-    <div id="selector">
-        <p id="close" onclick="closeSelector()">&#x2715;</p><br>
-        <p style="margin-bottom: 5px;">Guess the Pokemon</p>
-        <p id="categories">ELECTRIC / LEGENDARY</p><br>
-        <div id="searchbox">
-            <p>&#x1F50E;&#xFE0E;&nbsp;&nbsp;&nbsp;Search...</p>
-        </div><br>
-        <ul id="searchresults">
-            <!-- to be populated with all pokemon that match -->
-        </ul>
-    </div>
-    <div id="background"></div>
-    <!-- <p id="errorMsg">error msg</p> -->
 </body>
 
 <script>
