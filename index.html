@@ -87,6 +87,9 @@
         font-size: 18px;
         font-weight: 100;
     }
+    #close:hover {
+        font-weight: bold;
+    }
     #categories {
         font-size: 12px;
         color: rgb(183, 183, 183);
@@ -115,9 +118,12 @@
         padding-bottom: 1em;
         margin: 0;
     }
-    #quag {
+    img {
         width: 80%;
         object-fit: cover;
+    }
+    #giveup {
+        padding: 10px;
     }
 
 </style>
@@ -160,8 +166,8 @@
             </ul>
         </div>
         <div id="background"></div>
-        <!-- <p id="errorMsg">error msg</p> -->
     </div>
+    <!-- <button id="giveup">See Answers</button> -->
 </body>
 
 <script>
@@ -315,12 +321,26 @@
         colArray = getArray(puzzle[colNum-1]);
         
         if(rowArray.includes(pokeName) && colArray.includes(pokeName)) {
-            document.getElementById(rowNum+"-"+colNum).children[0].setAttribute('value', pokeName)
-            document.getElementById('errorMsg').style.color = "white";
-        } else {
-            document.getElementById('errorMsg').innerText = pokeName + " is not " + puzzle[rowNum+2] + " and " + puzzle[colNum-1];
-            document.getElementById('errorMsg').style.color = "black";
-        }
+            const pokemonURL = "https://pokeapi.co/api/v2/pokemon-species/"+pokeName
+            fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Display data in an HTML element
+                for(let i = 0; i < data["varieties"].length; i++) {
+                    if(data["varieties"]["pokemon"]["name"] == pokeName) {
+                        document.getElementById(rowNum+"-"+colNum).innerHTML = "<img src='"+data["varieties"]["pokemon"]["url"]+"'>"
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } 
     }
 
 
