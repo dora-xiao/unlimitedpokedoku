@@ -75,6 +75,8 @@ d["mega"] = []
 # evolvesbyitem = []
 # evolvesbyfriendship = []
 
+# TODO: add ultra beasts
+
 # base species (1 to 1025) and forms (10001 to 10277)
 idtoname = [""]*1026
 formidtoname = [""]*278
