@@ -1612,7 +1612,7 @@
         };
     }
     function intersect(side, top) {
-        return pokemondata[side].filter(v => pokemondata[top].includes(v));
+        return pokemondata[side].filter(v => pokemondata[top].indexOf(v) > -1);
     }
 
     // Assign limits to numbers of each category, then choose the labels
@@ -1691,15 +1691,8 @@
             const id = parseInt(all[i].id.replace("search-", ""));
             const currName = id > 10000 ? formname[id-10000] : basename[id];
             const strippedName = (currName.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ")).toLowerCase();
-            if(i == 4) {
-                break;
-            }   
-            alert(strippedName + " is at " + strippedName.indexOf(strippedSearch));
             if(strippedName.indexOf(strippedSearch) > -1) {
                 all[i].style.display = "flex";
-                alert(all[i].style.display);
-                alert(document.getElementById('search-'+id).style.display);
-                break;
             } else {
                 all[i].style.display = "none";
             }
@@ -1720,11 +1713,9 @@
     
     function guess(guessedID) {
         // Check answer 
-        alert("guessing");
         answers = getAnswersID(lastRow, lastCol);
         guessedName = document.getElementById('search-'+guessedID).children[1].innerText;
-        alert("Guessing " + guessedName);
-        if(answers.includes(guessedID)) {
+        if(answers.indexOf(guessedID) > -1) {
             var box = document.getElementById(lastRow+"-"+lastCol);
             box.style.pointerEvents = 'none';
             const imgurl = guessedID > 10000 ? formimg[guessedID-10000] : baseimg[guessedID];
