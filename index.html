@@ -162,8 +162,16 @@
         width: 80%;
         object-fit: cover;
     }
-    #giveup {
-        padding: 10px;
+    #reveal {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        margin: 0px;
+        font-size: 18px;
+        font-weight: 100;
+    }
+    #reveal:hover {
+        font-weight: bold;
     }
 
 </style>
@@ -196,6 +204,7 @@
         </div>
         <div id="selector">
             <p id="close" onclick="closeSelector()">&#x2715;</p><br>
+            <p id="reveal" onclick="revealAnswers()">&#9785;</p>
             <p style="margin-bottom: 5px;">Guess a Pokemon</p>
             <p id="categories"></p><br>
             <input type="text" id="searchbar" placeholder="Search..." onKeyUp="search()"><br>
@@ -1672,18 +1681,25 @@
     }
 
     function search() { // filter search results
+        alert("searching");
         const searchvalue = document.getElementById("searchbar").value;
         var strippedSearch = searchvalue.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ")
         if(strippedSearch == "") {
             strippedSearch = "N/A"
         }
+        alert("searching for " + strippedSearch);
         var all = document.getElementsByTagName("li");
+        alert(all.length)
         for(let i = 0; i < all.length; i++) {
             const id = parseInt(all[i].id.replace("search-", ""));
             const currName = id > 10000 ? formname[id-10000] : basename[id];
             const strippedName = currName.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ");
             if(strippedName.includes(strippedSearch)) {
+                alert(strippedName);
                 all[i].style.display = "flex";
+                alert(all[i].style.display);
+                alert(document.getElementById('search-'+id).style.display);
+                break;
             } else {
                 all[i].style.display = "none";
             }
@@ -1696,11 +1712,18 @@
     function getAnswersName(rowNum, colNum) { // with 1-indexing
         return solution[rowNum-1][colNum-1].map((id) => id > 10000 ? formname[id-10000] : basename[id]);
     }
+
+    function revealAnswers() {
+        answers = getAnswersName(lastRow, lastCol);
+        alert(answers);
+    }
     
     function guess(guessedID) {
         // Check answer 
+        alert("guessing");
         answers = getAnswersID(lastRow, lastCol);
         guessedName = document.getElementById('search-'+guessedID).children[1].innerText;
+        alert("Guessing " + guessedName);
         if(answers.includes(guessedID)) {
             var box = document.getElementById(lastRow+"-"+lastCol);
             box.style.pointerEvents = 'none';
