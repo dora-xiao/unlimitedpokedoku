@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
 <style>
     body {
@@ -227,6 +228,13 @@
     #revealbtn {
         border: 2px solid #ff6a5f!important;
         color: #ff6a5f!important;
+    }
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
     }
 
 </style>
@@ -1666,6 +1674,7 @@
     var solution;
     var lastRow;
     var lastCol;
+    var correct;
 
     // Helpers
     function randomNum(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
@@ -1819,6 +1828,7 @@
             const imgurl = guessedID > 10000 ? formimg[guessedID-10000] : baseimg[guessedID];
             box.innerHTML = "<img class='guessimg' src='"+imgurl+"'>";
             searchresults.removeChild(document.getElementById('search-'+guessedID));
+            correct += 1;
         } else {
             alert(guessedName + " is incorrect.");
         }
@@ -1829,7 +1839,24 @@
         document.getElementById("background").style.opacity = "0";
         document.getElementById("background").style.zIndex = "-1";
         document.getElementById("selector").style.display = "none";
-        
+        if(correct == 9) {
+            releaseConfetti();
+        }
+    }
+
+    function releaseConfetti() {
+        var myCanvas = document.createElement('canvas');
+        document.body.appendChild(myCanvas);
+
+        var myConfetti = confetti.create(myCanvas, {
+            resize: true,
+            useWorker: true
+        });
+        myConfetti({
+            particleCount: 100,
+            startVelocity: 30,
+            spread: 360
+        });
     }
 
     
@@ -1838,6 +1865,7 @@
         puzzleAndSoln = generatePuzzle()
         puzzle = puzzleAndSoln[0]
         solution = puzzleAndSoln[1]
+        correct = 0;
         document.getElementById('sidecat1').innerHTML = "<img class='catlabel' src='images/" + puzzle[0] + ".png'>" 
         document.getElementById('sidecat2').innerHTML = "<img class='catlabel' src='images/" + puzzle[1] + ".png'>" 
         document.getElementById('sidecat3').innerHTML = "<img class='catlabel' src='images/" + puzzle[2] + ".png'>" 
