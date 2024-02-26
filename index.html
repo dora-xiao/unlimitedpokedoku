@@ -1801,6 +1801,8 @@
     function revealAnswers() {
         document.getElementById('confirmreveal').style.display = "none";
         closeSelector();
+        document.getElementById("background").style.opacity = "1";
+        document.getElementById("background").style.zIndex = "1";
         answers = getAnswersName(lastRow, lastCol);
         var result = ""
         for(let i = 0; i < answers.length; i++) {
