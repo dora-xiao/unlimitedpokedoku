@@ -1691,13 +1691,10 @@
             const id = parseInt(all[i].id.replace("search-", ""));
             const currName = id > 10000 ? formname[id-10000] : basename[id];
             const strippedName = currName.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ");
-            alert(id);
-            alert(currName);
-            alert(strippedName);
             if(i == 4) {
                 break;
             }   
-            if(strippedName.includes(strippedSearch)) {
+            if(strippedName.indexOf(strippedSearch) > -1) {
                 all[i].style.display = "flex";
                 alert(all[i].style.display);
                 alert(document.getElementById('search-'+id).style.display);
