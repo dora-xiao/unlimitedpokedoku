@@ -1682,7 +1682,7 @@
 
     function search() { // filter search results
         const searchvalue = document.getElementById("searchbar").value;
-        var strippedSearch = searchvalue.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ")
+        var strippedSearch = (searchvalue.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ")).toLowerCase();
         if(strippedSearch == "") {
             strippedSearch = "N/A"
         }
@@ -1690,7 +1690,7 @@
         for(let i = 0; i < all.length; i++) {
             const id = parseInt(all[i].id.replace("search-", ""));
             const currName = id > 10000 ? formname[id-10000] : basename[id];
-            const strippedName = currName.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ");
+            const strippedName = (currName.replace(/[^\w\s\']|_/g, "").replace(/\s+/g, " ")).toLowerCase();
             if(i == 4) {
                 break;
             }   
